@@ -3,289 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOGO & SAL - Ementa Virtual AR</title>
+    <title>Ementa Digital - Fogo & Sal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     
     <style>
-        /* Paleta de Cores */
-        :root {
-            --color-primary: #3E000B; /* Bordeaux Escuro / Quase Preto */
-            --color-secondary: #C59D5F; /* Dourado Escuro / Cobre */
-            --color-background: #FAFAFA; /* Branco Sujo */
-            --color-text-light: #FAFAFA;
-            --color-text-dark: #333333;
-        }
-
-        /* Base */
+        /* ------------------------------------------- */
+        /* 1. RESET E TIPOGRAFIA BASE (ELEGÂNCIA)      */
+        /* ------------------------------------------- */
         body {
-            font-family: 'Georgia', serif; /* Fonte Clássica para Restaurante Gourmet */
+            font-family: 'Lato', sans-serif;
+            background-color: #111; /* Fundo escuro (steakhouse) */
+            color: #f0f0f0; 
             margin: 0;
             padding: 0;
-            background-color: var(--color-background);
-            color: var(--color-text-dark);
             line-height: 1.6;
+            min-height: 100vh; /* Garante que há scroll para ver o efeito */
         }
 
-        /* Header/Rodapé */
-        header {
-            background-color: var(--color-primary);
-            color: var(--color-text-light);
-            padding: 30px 20px;
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ------------------------------------------- */
+        /* 2. HEADER E LOGOTIPO                        */
+        /* ------------------------------------------- */
+        .header {
             text-align: center;
-            border-bottom: 5px solid var(--color-secondary);
+            padding: 40px 20px;
+            border-bottom: 1px solid #333;
         }
 
-        header h1 {
+        .logo {
+            font-family: 'Playfair Display', serif; /* Fonte serifada para o logo */
             font-size: 2.5em;
-            margin-bottom: 5px;
-            letter-spacing: 3px;
-            font-weight: 300;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin: 0;
+            text-transform: uppercase;
+            color: #f7b731; /* Cor de destaque (ouro/cobre) */
         }
 
-        header .tagline {
-            font-family: 'Arial', sans-serif;
+        .slogan {
             font-size: 0.9em;
-            font-style: italic;
-            color: var(--color-secondary);
+            color: #aaa;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        footer {
+        /* ------------------------------------------- */
+        /* 3. ESTRUTURA DO MENU                        */
+        /* ------------------------------------------- */
+        .menu {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #e0e0e0;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #222;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #222;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: #1a1a1a;
+        }
+
+        .item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4em;
+            margin: 0;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .item-description {
+            font-size: 0.9em;
+            color: #999;
+            margin-top: 5px;
+            font-style: italic;
+            max-width: 90%;
+        }
+
+        .item-price {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #f7b731;
+            text-align: right;
+            width: 15%;
+        }
+
+        /* ------------------------------------------- */
+        /* 4. BOTÃO AR / REALIDADE AUMENTADA (PULSE)   */
+        /* ------------------------------------------- */
+        .ar-container {
+            width: 25%;
+            text-align: right;
+        }
+
+        .ar-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #f7b731;
+            color: #111;
+            font-weight: bold;
+            font-size: 0.8em;
+            border-radius: 3px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .ar-button:hover {
+            background-color: #ffc857;
+            transform: scale(1.05); 
+        }
+
+        /* Keyframes para a animação de pulso */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(247, 183, 49, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(247, 183, 49, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(247, 183, 49, 0);
+            }
+        }
+
+        .ar-enabled .ar-button {
+            animation: pulse 2s infinite; 
+        }
+
+        /* ------------------------------------------- */
+        /* 5. CLASSES DE ANIMAÇÃO JAVASCRIPT (SCROLL)  */
+        /* ------------------------------------------- */
+        /* Estado inicial dos itens: invisível e ligeiramente para baixo */
+        .menu-item,
+        .category-title {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transição suave */
+        }
+        
+        /* Estado final: visível e na posição original */
+        .menu-item.is-visible,
+        .category-title.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ------------------------------------------- */
+        /* 6. FOOTER                                   */
+        /* ------------------------------------------- */
+        .footer {
             text-align: center;
             padding: 20px;
             font-size: 0.8em;
             color: #666;
-            margin-top: 40px;
-        }
-
-        /* Conteúdo da Ementa */
-        main {
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .menu-section {
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #ccc;
-        }
-
-        .menu-section:last-of-type {
-            border-bottom: none;
-        }
-
-        .menu-section h2 {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            color: var(--color-primary);
-            font-size: 1.5em;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-
-        /* Item da Ementa */
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 15px 0;
-            border-top: 1px solid #eee;
-            position: relative;
-        }
-
-        .menu-item:first-child {
-            border-top: none;
-        }
-
-        .item-info {
-            flex-grow: 1;
-            padding-right: 15px;
-        }
-
-        .item-info h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.1em;
-            color: var(--color-primary);
-            font-weight: bold;
-        }
-
-        .item-info p {
-            margin: 0;
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .price {
-            font-family: 'Arial', sans-serif;
-            font-size: 1.1em;
-            font-weight: bold;
-            color: var(--color-primary);
-            flex-shrink: 0;
-        }
-
-        /* Destaque AR */
-        .ar-item {
-            background-color: #f7f7f7;
-            border-left: 5px solid var(--color-secondary);
-            padding: 20px;
-            margin: 15px 0;
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .ar-item .item-info {
-            padding-right: 0;
-        }
-
-        .ar-item .price {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        .ar-tag {
-            background-color: var(--color-secondary);
-            color: var(--color-primary);
-            font-size: 0.7em;
-            padding: 2px 6px;
-            border-radius: 3px;
-            margin-left: 8px;
-            font-weight: bold;
-            vertical-align: top;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .ar-button {
-            background-color: var(--color-secondary);
-            color: var(--color-primary);
-            border: none;
-            padding: 10px;
-            margin-top: 15px;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .ar-button:hover {
-            background-color: var(--color-primary);
-            color: var(--color-secondary);
-        }
-
-        /* Ajustes Mobile */
-        @media (max-width: 400px) {
-            header h1 {
-                font-size: 2em;
-            }
-            .ar-item .price {
-                position: static;
-                margin-top: 10px;
-                text-align: right;
-            }
+            border-top: 1px solid #222;
+            margin-top: 60px;
         }
     </style>
-</head>
+    </head>
 <body>
 
-    <header>
-        <h1>FOGO & SAL</h1>
-        <p class="tagline">Grelhados de Autor & Experiências Imersivas</p>
+    <header class="header">
+        <h1 class="logo">FOGO & SAL</h1>
+        <p class="slogan">A Arte da Maturação na Brasa</p>
     </header>
 
-    <main>
+    <main class="menu">
+
+        <section class="menu-category">
+            <h2 class="category-title">OS CORTES PREMIUM</h2>
+            
+            <div class="menu-item ar-enabled" id="tbone-item"> 
+                <div class="item-details">
+                    <h3 class="item-name">T-BONE - O Corte Duplo</h3>
+                    <p class="item-description">Duas peças nobres num só corte: lombo e vazia, separados pelo osso em T. Ideal para partilhar. Maturação de 15 dias.</p>
+                    <p class="item-price">€ 100,00 (kg)</p>
+                </div>
+                
+                <div class="ar-container">
+                    <a href="https://axbdc.github.io/ementa_AR.html" class="ar-button" target="_blank">
+                        VER EM 3D / AR
+                    </a>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-details">
+                    <h3 class="item-name">VAZIA - 30 Dias Maturação</h3>
+                    <p class="item-description">Uma das sugestões mais democráticas, com boa dose de gordura lateral que lhe confere suculência.</p>
+                    <p class="item-price">€ 34,00 (200g)</p>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-details">
+                    <h3 class="item-name">ENTRECÔTE - Ligeiramente Marmoreado</h3>
+                    <p class="item-description">Corte ligeiramente marmoreado, com gordura lateral para sabor intenso e textura macia.</p>
+                    <p class="item-price">€ 38,00 (250g)</p>
+                </div>
+            </div>
+            
+        </section>
         
-        <section class="menu-section">
-            <h2>&mdash; Entradas &mdash;</h2>
-            
+        <section class="menu-category">
+            <h2 class="category-title">ACOMPANHAMENTOS</h2>
             <div class="menu-item">
-                <div class="item-info">
-                    <h3>Pão de Alho de Fermentação Lenta</h3>
-                    <p>Servido com azeite de alecrim e flor de sal.</p>
+                <div class="item-details">
+                    <h3 class="item-name">Batatas Fritas com Trufa</h3>
+                    <p class="item-description">Com Parmigiano Reggiano 24 meses.</p>
+                    <p class="item-price">€ 10,00</p>
                 </div>
-                <span class="price">4,50€</span>
             </div>
-
-            <div class="menu-item highlight ar-item">
-                <div class="item-info">
-                    <h3>QUEIJO CHORIZO AR <span class="ar-tag">AR</span></h3>
-                    <p>Chorizo de porco preto envolto em queijo provolone fumado, servido em chapa quente.</p>
+            <div class="menu-item">
+                <div class="item-details">
+                    <h3 class="item-name">Legumes na Brasa</h3>
+                    <p class="item-description">Seleção de legumes sazonais com azeite de alecrim.</p>
+                    <p class="item-price">€ 8,00</p>
                 </div>
-                <span class="price">9,00€</span>
-                <button class="ar-button" data-glb="https://fogoesal.com/ar/chorizo_provolone.glb" data-usdz="https://fogoesal.com/ar/chorizo_provolone.usdz">Ver em AR</button>
             </div>
-            
+        </section>
+        
+        <section class="menu-category">
+            <h2 class="category-title">SOBREMESAS DE AUTOR</h2>
+            <div class="menu-item">
+                <div class="item-details">
+                    <h3 class="item-name">Tarte de Limão Merengada</h3>
+                    <p class="item-description">Com gelado de iogurte grego e um toque de lima.</p>
+                    <p class="item-price">€ 10,00</p>
+                </div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <h3 class="item-name">Chocolate Beef</h3>
+                    <p class="item-description">Mousse de chocolate 70% com paprica fumada, praliné de avelã e caramelo salgado.</p>
+                    <p class="item-price">€ 20,00</p>
+                </div>
+            </div>
         </section>
 
-        <section class="menu-section">
-            <h2>&mdash; Pratos Principais &mdash;</h2>
-            
-            <div class="menu-item">
-                <div class="item-info">
-                    <h3>PICANHA RODÍZIO</h3>
-                    <p>A nossa seleção Premium de Picanha maturada, fatiada no momento e no ponto perfeito de brasa.</p>
-                </div>
-                <span class="price">22,00€</span>
-            </div>
-            
-            <div class="menu-item highlight ar-item">
-                <div class="item-info">
-                    <h3>T-BONE MATURADO AR <span class="ar-tag">AR</span></h3>
-                    <p>Corte exclusivo T-Bone (600g) de Black Angus, Dry-Aged, com batata rústica e molho chimichurri.</p>
-                </div>
-                <span class="price">35,00€</span>
-                <button class="ar-button" data-glb="https://fogoesal.com/ar/tbone_dryaged.glb" data-usdz="https://fogoesal.com/ar/tbone_dryaged.usdz">Ver em AR</button>
-            </div>
-
-        </section>
-
-        <section class="menu-section">
-            <h2>&mdash; Sobremesas &mdash;</h2>
-            
-            <div class="menu-item">
-                <div class="item-info">
-                    <h3>Mousse de Chocolate 70%</h3>
-                    <p>Cremosa, intensa e ligeiramente amarga, com raspas de cacau.</p>
-                </div>
-                <span class="price">6,50€</span>
-            </div>
-            
-            <div class="menu-item highlight ar-item">
-                <div class="item-info">
-                    <h3>PETIT GÂTEAU DE DOCE DE LEITE AR <span class="ar-tag">AR</span></h3>
-                    <p>Bolo quente e vulcânico de doce de leite, servido com gelado de baunilha.</p>
-                </div>
-                <span class="price">7,50€</span>
-                <button class="ar-button" data-glb="https://fogoesal.com/ar/petitgateau_docedeleite.glb" data-usdz="https://fogoesal.com/ar/petitgateau_docedeleite.usdz">Ver em AR</button>
-            </div>
-
-        </section>
 
     </main>
 
-    <footer>
-        <p>&copy; FOGO & SAL. Descubra a próxima geração de sabor.</p>
+    <footer class="footer">
+        <p>Preços com IVA incluído à taxa legal em vigor.</p>
     </footer>
 
     <script>
-        document.querySelectorAll('.ar-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const glb = this.getAttribute('data-glb');
-                const usdz = this.getAttribute('data-usdz');
-                
-                // Lógica de deteção de SO para abrir o formato correto
-                if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-                    // Para iOS (Apple), usa o formato USDZ
-                    window.location.href = usdz;
-                } else {
-                    // Para Android (Google) e outros, usa o formato GLB.
-                    // Para ativação total da Realidade Aumentada (ARCore) no Android,
-                    // seria ideal usar um componente <model-viewer> complexo, mas para
-                    // esta apresentação, o link GLB já é suficiente para a visualização 3D.
-                    window.location.href = glb;
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // ----------------------------------------------------
+            // 1. EFEITO DE FADE-IN NO SCROLL (SCROLL REVEAL)
+            // ----------------------------------------------------
+            const menuItems = document.querySelectorAll('.menu-item');
+            const categoryTitles = document.querySelectorAll('.category-title');
+            
+            // Junta todos os elementos a animar
+            const elementsToAnimate = [...menuItems, ...categoryTitles];
+
+            // Configurações do observador de intersecção
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.2 // o item aparece quando 20% dele estiver visível
+            };
+
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Adiciona a classe que ativa a transição CSS
+                        entry.target.classList.add('is-visible');
+                        // Pára de observar o item
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            // Observar cada elemento
+            elementsToAnimate.forEach(item => {
+                observer.observe(item);
             });
+
+            // ----------------------------------------------------
+            // 2. EFEITO DE TRANSIÇÃO NA SAÍDA (CLICAR NO BOTÃO AR)
+            // ----------------------------------------------------
+            const arButton = document.querySelector('.ar-button');
+
+            if (arButton) {
+                arButton.addEventListener('click', (e) => {
+                    // Escurecer o fundo para uma transição suave
+                    document.body.style.transition = 'background-color 0.5s ease-out';
+                    document.body.style.backgroundColor = '#000'; 
+                    
+                    // Ativar a transição para o link após a animação de escurecimento (500ms)
+                    setTimeout(() => {
+                        window.location.href = e.currentTarget.href;
+                    }, 500); 
+                    
+                    // Impede o salto imediato do link para permitir a animação
+                    e.preventDefault(); 
+                });
+            }
+
         });
     </script>
-</body>
+    </body>
 </html>

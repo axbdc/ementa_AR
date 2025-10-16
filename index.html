@@ -4,30 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ementa Digital - Fogo & Sal</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     
     <style>
-        /* ------------------------------------------- */
-        /* 1. RESET E TIPOGRAFIA BASE (ELEGÂNCIA)      */
-        /* ------------------------------------------- */
+        /* ----------------------- RESET & TIPOGRAFIA GERAL ----------------------- */
         body {
             font-family: 'Lato', sans-serif;
-            background-color: #111; /* Fundo escuro (steakhouse) */
+            background-color: #111;
             color: #f0f0f0; 
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            min-height: 100vh; /* Garante que há scroll para ver o efeito */
+            min-height: 100vh;
+            transition: background-color 0.5s ease-out;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
+        a { text-decoration: none; color: inherit; }
+
+        /* Esconde a página de visualização AR por defeito */
+        .page {
+            display: none;
+            transition: opacity 0.5s;
         }
 
-        /* ------------------------------------------- */
-        /* 2. HEADER E LOGOTIPO                        */
-        /* ------------------------------------------- */
+        .page.active {
+            display: block;
+        }
+
+        /* ----------------------- LAYOUT GERAL DO MENU (MAIN-MENU) ----------------------- */
         .header {
             text-align: center;
             padding: 40px 20px;
@@ -35,45 +40,71 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif; /* Fonte serifada para o logo */
+            font-family: 'Playfair Display', serif;
             font-size: 2.5em;
             font-weight: 700;
             letter-spacing: 5px;
             margin: 0;
             text-transform: uppercase;
-            color: #f7b731; /* Cor de destaque (ouro/cobre) */
+            color: #f7b731;
         }
 
-        .slogan {
-            font-size: 0.9em;
-            color: #aaa;
-            margin-top: 5px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        .menu-category {
+            margin-bottom: 60px;
+        }
+        
+        /* Simulação da Imagem de Fundo do Sala de Corte */
+        .category-header {
+            height: 250px; 
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            background-size: cover;
+            background-position: center 30%;
+            position: relative;
         }
 
-        /* ------------------------------------------- */
-        /* 3. ESTRUTURA DO MENU                        */
-        /* ------------------------------------------- */
-        .menu {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: 1;
         }
 
         .category-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8em;
-            font-weight: 300;
-            letter-spacing: 3px;
+            font-size: 2.5em;
+            font-weight: 700;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            color: #e0e0e0;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #222;
+            color: #fff;
+            z-index: 2;
+            margin: 0;
         }
-
+        
+        /* ---------------------------------------------------- */
+        /* CÓDIGO ATUALIZADO COM OS NOMES DAS SUAS IMAGENS */
+        /* ---------------------------------------------------- */
+        #cortes-header {
+            /* Caminho Relativo: img/carne_fundo.jpg */
+            background-image: url('carne_fundo.jpg'); 
+            background-color: #222; /* Cor de fallback */
+        }
+        
+        #sobremesas-header {
+            /* Caminho Relativo: img/sobremesa_fundo.png */
+            background-image: url('sobremesa_fundo.png'); 
+            background-color: #222; /* Cor de fallback */
+        }
+        
+        /* ------------- ITENS DO MENU & ANIMAÇÃO SCROLL ------------- */
+        .menu-list {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
         .menu-item {
             display: flex;
             justify-content: space-between;
@@ -81,224 +112,240 @@
             padding: 20px 0;
             border-bottom: 1px solid #222;
             transition: background-color 0.3s ease;
-        }
-
-        .menu-item:hover {
-            background-color: #1a1a1a;
-        }
-
-        .item-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4em;
-            margin: 0;
-            color: #fff;
-            font-weight: 400;
-        }
-
-        .item-description {
-            font-size: 0.9em;
-            color: #999;
-            margin-top: 5px;
-            font-style: italic;
-            max-width: 90%;
-        }
-
-        .item-price {
-            font-size: 1.2em;
-            font-weight: 700;
-            color: #f7b731;
-            text-align: right;
-            width: 15%;
-        }
-
-        /* ------------------------------------------- */
-        /* 4. BOTÃO AR / REALIDADE AUMENTADA (PULSE)   */
-        /* ------------------------------------------- */
-        .ar-container {
-            width: 25%;
-            text-align: right;
-        }
-
-        .ar-button {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #f7b731;
-            color: #111;
-            font-weight: bold;
-            font-size: 0.8em;
-            border-radius: 3px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .ar-button:hover {
-            background-color: #ffc857;
-            transform: scale(1.05); 
-        }
-
-        /* Keyframes para a animação de pulso */
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(247, 183, 49, 0.5);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(247, 183, 49, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(247, 183, 49, 0);
-            }
-        }
-
-        .ar-enabled .ar-button {
-            animation: pulse 2s infinite; 
-        }
-
-        /* ------------------------------------------- */
-        /* 5. CLASSES DE ANIMAÇÃO JAVASCRIPT (SCROLL)  */
-        /* ------------------------------------------- */
-        /* Estado inicial dos itens: invisível e ligeiramente para baixo */
-        .menu-item,
-        .category-title {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transição suave */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        
-        /* Estado final: visível e na posição original */
-        .menu-item.is-visible,
-        .category-title.is-visible {
+
+        .menu-item:hover { background-color: #1a1a1a; }
+
+        .item-name { font-family: 'Playfair Display', serif; font-size: 1.4em; }
+        .item-description { font-size: 0.9em; color: #999; font-style: italic; }
+        .item-price { font-size: 1.2em; font-weight: 700; color: #f7b731; }
+
+        .ar-container { width: 25%; text-align: right; }
+        .ar-button { 
+            display: inline-block; padding: 10px 15px; 
+            background-color: #f7b731; color: #111; 
+            font-weight: bold; font-size: 0.8em; 
+            border-radius: 3px; cursor: pointer; border: none;
+            text-transform: uppercase;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(247, 183, 49, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(247, 183, 49, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(247, 183, 49, 0); }
+        }
+
+        .ar-enabled .ar-button { animation: pulse 2s infinite; }
+
+        .menu-item.is-visible, .category-title.is-visible, .category-header.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* ------------------------------------------- */
-        /* 6. FOOTER                                   */
-        /* ------------------------------------------- */
-        .footer {
-            text-align: center;
+        /* ----------------------- LAYOUT DEDICADO AR (AR-VIEWER-PAGE) ----------------------- */
+        .ar-content {
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .ar-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             padding: 20px;
-            font-size: 0.8em;
-            color: #666;
-            border-top: 1px solid #222;
-            margin-top: 60px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+        
+        .back-button {
+            font-size: 2em;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+            margin-right: 20px;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .back-button:hover { color: #f7b731; }
+        
+        .item-title-ar {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            color: #f7b731;
+            margin: 0;
+        }
+
+        .viewer-area {
+            background-color: #222; 
+            height: 60vh; 
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 1.5em;
+        }
+
+        .info-panel {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .item-details-box {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            text-align: left; /* Ajuste para o texto interno */
+        }
+
+        .cta-ar-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #f7b731;
+            color: #111;
+            font-weight: bold;
+            font-size: 1.1em;
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
         }
     </style>
     </head>
 <body>
 
-    <header class="header">
-        <h1 class="logo">FOGO & SAL</h1>
-        <p class="slogan">A Arte da Maturação na Brasa</p>
-    </header>
+    <div id="main-menu" class="page active">
+        <header class="header">
+            <h1 class="logo">FOGO & SAL</h1>
+            <p class="slogan">Ementa Digital</p>
+        </header>
 
-    <main class="menu">
-
-        <section class="menu-category">
-            <h2 class="category-title">OS CORTES PREMIUM</h2>
-            
-            <div class="menu-item ar-enabled" id="tbone-item"> 
-                <div class="item-details">
-                    <h3 class="item-name">T-BONE - O Corte Duplo</h3>
-                    <p class="item-description">Duas peças nobres num só corte: lombo e vazia, separados pelo osso em T. Ideal para partilhar. Maturação de 15 dias.</p>
-                    <p class="item-price">€ 100,00 (kg)</p>
+        <main class="menu">
+            <section class="menu-category">
+                <div class="category-header is-visible" id="cortes-header">
+                    <h2 class="category-title">OS CORTES PREMIUM</h2>
                 </div>
                 
-                <div class="ar-container">
-                    <a href="https://axbdc.github.io/ementa_AR.html" class="ar-button" target="_blank">
-                        VER EM 3D / AR
-                    </a>
-                </div>
-            </div>
+                <div class="menu-list">
+                    <div class="menu-item ar-enabled" data-item-id="tbone"> 
+                        <div class="item-details">
+                            <h3 class="item-name">T-BONE - O Corte Duplo</h3>
+                            <p class="item-description">Duas peças nobres num só corte, ideal para partilhar. Maturação 15 dias.</p>
+                            <p class="item-price">€ 100,00 (kg)</p>
+                        </div>
+                        
+                        <div class="ar-container">
+                            <button class="ar-button view-item-btn" data-target="tbone">
+                                VER PRATO
+                            </button>
+                        </div>
+                    </div>
 
-            <div class="menu-item">
-                <div class="item-details">
-                    <h3 class="item-name">VAZIA - 30 Dias Maturação</h3>
-                    <p class="item-description">Uma das sugestões mais democráticas, com boa dose de gordura lateral que lhe confere suculência.</p>
-                    <p class="item-price">€ 34,00 (200g)</p>
+                    <div class="menu-item" data-item-id="vazia">
+                        <div class="item-details">
+                            <h3 class="item-name">VAZIA - 30 Dias Maturação</h3>
+                            <p class="item-description">Sugestão democrática com gordura lateral que lhe confere suculência.</p>
+                            <p class="item-price">€ 34,00 (200g)</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="menu-item">
-                <div class="item-details">
-                    <h3 class="item-name">ENTRECÔTE - Ligeiramente Marmoreado</h3>
-                    <p class="item-description">Corte ligeiramente marmoreado, com gordura lateral para sabor intenso e textura macia.</p>
-                    <p class="item-price">€ 38,00 (250g)</p>
-                </div>
-            </div>
+            </section>
             
-        </section>
-        
-        <section class="menu-category">
-            <h2 class="category-title">ACOMPANHAMENTOS</h2>
-            <div class="menu-item">
-                <div class="item-details">
-                    <h3 class="item-name">Batatas Fritas com Trufa</h3>
-                    <p class="item-description">Com Parmigiano Reggiano 24 meses.</p>
-                    <p class="item-price">€ 10,00</p>
+            <section class="menu-category">
+                <div class="category-header" id="sobremesas-header">
+                    <h2 class="category-title">SOBREMESAS DE AUTOR</h2>
                 </div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <h3 class="item-name">Legumes na Brasa</h3>
-                    <p class="item-description">Seleção de legumes sazonais com azeite de alecrim.</p>
-                    <p class="item-price">€ 8,00</p>
+                
+                <div class="menu-list">
+                    <div class="menu-item" data-item-id="chocolate-beef">
+                        <div class="item-details">
+                            <h3 class="item-name">Chocolate Beef</h3>
+                            <p class="item-description">Mousse de chocolate 70% com paprica fumada e caramelo salgado.</p>
+                            <p class="item-price">€ 20,00</p>
+                        </div>
+                    </div>
                 </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Preços com IVA incluído à taxa legal em vigor.</p>
+        </footer>
+    </div>
+    <div id="tbone-ar-page" class="page">
+        <div class="ar-header">
+            <button onclick="showPage('main-menu')" class="back-button">&#10094; Voltar</button> 
+            <h1 class="item-title-ar">T-BONE - O Corte Duplo</h1>
+        </div>
+
+        <main class="ar-content">
+
+            <div class="viewer-area" style="margin-top: 80px;">
+                <p>VISUALIZADOR 3D DO T-BONE AQUI</p>
             </div>
-        </section>
-        
-        <section class="menu-category">
-            <h2 class="category-title">SOBREMESAS DE AUTOR</h2>
-            <div class="menu-item">
-                <div class="item-details">
-                    <h3 class="item-name">Tarte de Limão Merengada</h3>
-                    <p class="item-description">Com gelado de iogurte grego e um toque de lima.</p>
-                    <p class="item-price">€ 10,00</p>
+
+            <div class="info-panel">
+                
+                <div class="item-details-box">
+                    <h3>Detalhes do Corte:</h3>
+                    <p>🍖 **Origem:** Novilho de Pasto, Maturação Controlada (Dry Age).</p>
+                    <p>🔪 **Composição:** Lombo (o mais tenro) e Vazia (sabor intenso e gordura).</p>
+                    <p>⏲️ **Maturação:** 15 dias para máxima suculência.</p>
+                    <p>⚖️ **Gramagem:** Servido ao peso (aprox. 1kg - Ideal para 2 ou 3 pessoas).</p>
                 </div>
+                
+                <a href="URL_DO_SEU_AR_VIEWER_FINAL" class="cta-ar-button" target="_blank">
+                    VER EM REALIDADE AUMENTADA AGORA
+                </a>
+
             </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <h3 class="item-name">Chocolate Beef</h3>
-                    <p class="item-description">Mousse de chocolate 70% com paprica fumada, praliné de avelã e caramelo salgado.</p>
-                    <p class="item-price">€ 20,00</p>
-                </div>
-            </div>
-        </section>
-
-
-    </main>
-
-    <footer class="footer">
-        <p>Preços com IVA incluído à taxa legal em vigor.</p>
-    </footer>
-
+        </main>
+    </div>
     <script>
+        // Função Global para mudar entre as páginas/vistas
+        function showPage(pageId) {
+            // Esconde todas as páginas
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Mostra a página pretendida
+            document.getElementById(pageId).classList.add('active');
+            
+            // Reposiciona o scroll no topo ao mudar de vista
+            window.scrollTo(0, 0);
+
+            // Transição de cor
+            document.body.style.backgroundColor = '#111';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             
             // ----------------------------------------------------
             // 1. EFEITO DE FADE-IN NO SCROLL (SCROLL REVEAL)
             // ----------------------------------------------------
-            const menuItems = document.querySelectorAll('.menu-item');
-            const categoryTitles = document.querySelectorAll('.category-title');
-            
-            // Junta todos os elementos a animar
-            const elementsToAnimate = [...menuItems, ...categoryTitles];
+            const menuElementsToAnimate = document.querySelectorAll('#main-menu .menu-item, #main-menu .category-header'); 
 
-            // Configurações do observador de intersecção
             const observerOptions = {
-                root: null, // viewport
+                root: null, 
                 rootMargin: '0px',
-                threshold: 0.2 // o item aparece quando 20% dele estiver visível
+                threshold: 0.2 
             };
 
             const observerCallback = (entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Adiciona a classe que ativa a transição CSS
                         entry.target.classList.add('is-visible');
-                        // Pára de observar o item
                         observer.unobserve(entry.target); 
                     }
                 });
@@ -306,32 +353,27 @@
 
             const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-            // Observar cada elemento
-            elementsToAnimate.forEach(item => {
+            menuElementsToAnimate.forEach(item => {
                 observer.observe(item);
             });
 
             // ----------------------------------------------------
-            // 2. EFEITO DE TRANSIÇÃO NA SAÍDA (CLICAR NO BOTÃO AR)
+            // 2. Lógica para mudar para a página AR
             // ----------------------------------------------------
-            const arButton = document.querySelector('.ar-button');
+            const viewItemButtons = document.querySelectorAll('.view-item-btn');
 
-            if (arButton) {
-                arButton.addEventListener('click', (e) => {
-                    // Escurecer o fundo para uma transição suave
-                    document.body.style.transition = 'background-color 0.5s ease-out';
-                    document.body.style.backgroundColor = '#000'; 
+            viewItemButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetPageId = button.getAttribute('data-target') + '-ar-page';
                     
-                    // Ativar a transição para o link após a animação de escurecimento (500ms)
+                    // Simula a transição de fundo escuro antes de trocar a vista
+                    document.body.style.backgroundColor = '#000';
+                    
                     setTimeout(() => {
-                        window.location.href = e.currentTarget.href;
-                    }, 500); 
-                    
-                    // Impede o salto imediato do link para permitir a animação
-                    e.preventDefault(); 
+                        showPage(targetPageId);
+                    }, 500);
                 });
-            }
-
+            });
         });
     </script>
     </body>

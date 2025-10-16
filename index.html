@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ementa Digital - Fogo & Sal | Visibilidade Corrigida</title>
+    <title>Ementa Digital - Fogo & Sal | Animação Maximizada</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght=400;700&family=Lato:wght=300;400&display=swap" rel="stylesheet">
     
     <style>
         /* ----------------------- RESET & TIPOGRAFIA GERAL ----------------------- */
@@ -34,10 +34,9 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            /* Cor de FALLBACK se a imagem falhar */
-            background-color: #1a1a1a; 
+            background-color: #1a1a1a; /* Cor de fallback/base */
             opacity: 0; 
-            transition: opacity 0.8s ease-out; 
+            transition: opacity 0.8s ease-out; /* Suave */
             z-index: -1; 
         }
         
@@ -48,7 +47,7 @@
         /* ----------------------- HEADER & LOGOTIPO ----------------------- */
         .header {
             position: sticky; top: 0; text-align: center; padding: 20px 20px;
-            background-color: rgba(17, 17, 17, 0.95); /* Semi-transparente para ver o fundo */
+            background-color: rgba(17, 17, 17, 0.95);
             border-bottom: 1px solid #333; z-index: 10; 
         }
         .logo {
@@ -59,17 +58,26 @@
 
         /* ----------------------- ESTRUTURA DO MENU (CONTENT OVERLAY) ----------------------- */
         .menu { max-width: 1000px; margin: 0 auto; padding: 0; }
-        .menu-category { margin-bottom: 60px; }
+        .menu-category { 
+            margin-bottom: 60px; 
+            /* Importante: a área de hover é agora ESTA SECÇÃO INTEIRA */
+        }
         
-        /* REVERTIDO: Cabeçalhos com as imagens originais para visualização padrão */
+        /* LIMPEZA VISUAL: Header sem imagem de fundo (fundo full-screen faz o trabalho) */
         .category-header {
-            height: 250px; display: flex; align-items: flex-end; padding: 20px;
-            background-size: cover; background-position: center 30%; position: relative;
+            height: 100px; /* Reduzida para ser mais clean */
+            display: flex; align-items: center; justify-content: flex-start; /* Alinhamento centralizado */
+            padding: 20px;
+            background-image: none !important; /* Remoção garantida da imagem */
+            background-color: transparent; 
+            position: relative;
         }
 
         .category-header::before {
+            /* Overlay mais sutil apenas para o título */
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4); z-index: 1;
+            background: rgba(0, 0, 0, 0.2); 
+            z-index: 1;
         }
 
         .category-title {
@@ -77,20 +85,21 @@
             letter-spacing: 5px; text-transform: uppercase; color: #fff; z-index: 2; margin: 0;
         }
         
-        /* IMAGENS DE FUNDO ORIGINAIS REVERTIDAS */
-        #cortes-header { background-image: url('carne_fundo.jpg'); background-color: #222; }
-        #sobremesas-header { background-image: url('sobremesa_fundo.png'); background-color: #222; }
+        /* Limpar as IDs de imagem */
+        #cortes-header, #sobremesas-header {
+            background-image: none; 
+            background-color: #111; /* Cor escura simples */
+        }
         
         .menu-list { padding: 20px; max-width: 900px; margin: 0 auto; }
         
-        /* MELHORADO: Itens com fundo mais claro para sensação "clean" */
+        /* Itens: Fundo semi-transparente para leitura sobre o fundo dinâmico */
         .menu-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px;
             margin-bottom: 10px;
             border-radius: 4px;
-            /* Fundo semi-transparente MAIS CLARO para ser mais "clean" */
-            background-color: rgba(26, 26, 26, 0.95); 
+            background-color: rgba(26, 26, 26, 0.9); /* Quase opaco para leitura */
             border: 1px solid #222;
             
             /* SCROLL REVEAL */
@@ -111,8 +120,16 @@
             display: inline-block; padding: 10px 15px; background-color: #f7b731; color: #111; 
             font-weight: bold; font-size: 0.8em; border-radius: 3px; cursor: pointer; border: none;
             text-transform: uppercase;
+            transition: box-shadow 0.3s ease; /* Transição para o glow */
         }
 
+        /* ANIMAÇÃO GLOW REVERTIDA NO BOTÃO */
+        .ar-button:hover {
+            box-shadow: 0 0 10px rgba(247, 183, 49, 0.7); /* Efeito de brilho de ouro */
+            background-color: #ffc140; /* Um pouco mais claro no hover */
+        }
+
+        /* Classes JS para visibilidade (SCROLL REVEAL) */
         .menu-item.is-visible, .category-title.is-visible, .category-header.is-visible {
             opacity: 1; transform: translateY(0);
         }
@@ -220,10 +237,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             
             const fullscreenBg = document.getElementById('fullscreen-bg');
+            // Seleciona todas as secções de menu para o efeito hover
             const menuCategories = document.querySelectorAll('.menu-category');
 
             // ----------------------------------------------------
             // 1. ANIMAÇÃO DE FUNDO FULL-SCREEN NO HOVER
+            //    (Ativada por toda a secção)
             // ----------------------------------------------------
             menuCategories.forEach(category => {
                 const bgImage = category.getAttribute('data-bg-image');

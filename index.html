@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ementa Digital - Fogo & Sal | Fundo Dinâmico</title>
+    <title>Ementa Digital - Fogo & Sal | Visibilidade Corrigida</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     
@@ -22,12 +22,10 @@
         }
 
         a { text-decoration: none; color: inherit; }
-
-        /* VISTAS */
         .page { display: none; transition: opacity 0.5s; }
         .page.active { display: block; }
 
-        /* ----------------------- NOVO FUNDO FULL-SCREEN ----------------------- */
+        /* ----------------------- FUNDO FULL-SCREEN (PARA ANIMAÇÃO HOVER) ----------------------- */
         #fullscreen-bg {
             position: fixed;
             top: 0;
@@ -36,61 +34,42 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0; /* Invisível por defeito */
-            transition: opacity 0.8s ease-out; /* Transição suave */
-            z-index: -1; /* Fica por baixo de todo o conteúdo */
+            /* Cor de FALLBACK se a imagem falhar */
+            background-color: #1a1a1a; 
+            opacity: 0; 
+            transition: opacity 0.8s ease-out; 
+            z-index: -1; 
         }
         
         #fullscreen-bg.active {
-            opacity: 1; /* Torna-se visível no hover */
+            opacity: 1;
         }
         
         /* ----------------------- HEADER & LOGOTIPO ----------------------- */
         .header {
-            position: sticky;
-            top: 0;
-            text-align: center;
-            padding: 20px 20px;
-            /* Usar rgba para que o texto na seção de fundo seja visível, 
-               o header flutua sobre a imagem */
-            background-color: rgba(17, 17, 17, 0.95); 
-            border-bottom: 1px solid #333;
-            z-index: 10; /* Z-index alto para ficar por cima do conteúdo */
+            position: sticky; top: 0; text-align: center; padding: 20px 20px;
+            background-color: rgba(17, 17, 17, 0.95); /* Semi-transparente para ver o fundo */
+            border-bottom: 1px solid #333; z-index: 10; 
         }
-
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5em;
-            font-weight: 700;
-            letter-spacing: 5px;
-            margin: 0;
-            text-transform: uppercase;
-            color: #f7b731;
+            font-family: 'Playfair Display', serif; font-size: 2.5em; font-weight: 700;
+            letter-spacing: 5px; margin: 0; text-transform: uppercase; color: #f7b731;
         }
-        
         .slogan { color: #aaa; margin-top: 5px; }
 
         /* ----------------------- ESTRUTURA DO MENU (CONTENT OVERLAY) ----------------------- */
         .menu { max-width: 1000px; margin: 0 auto; padding: 0; }
         .menu-category { margin-bottom: 60px; }
         
-        /* Remover o fundo das secções, pois o fundo principal será a imagem full-screen */
+        /* REVERTIDO: Cabeçalhos com as imagens originais para visualização padrão */
         .category-header {
-            height: 250px; 
-            display: flex; 
-            align-items: flex-end; 
-            padding: 20px;
-            background-image: none !important; /* Remover imagens de fundo locais */
-            background-color: transparent; 
-            position: relative;
+            height: 250px; display: flex; align-items: flex-end; padding: 20px;
+            background-size: cover; background-position: center 30%; position: relative;
         }
 
         .category-header::before {
-            content: ''; 
-            position: absolute; 
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4); /* Overlay escuro para melhorar a leitura */
-            z-index: 1;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4); z-index: 1;
         }
 
         .category-title {
@@ -98,31 +77,29 @@
             letter-spacing: 5px; text-transform: uppercase; color: #fff; z-index: 2; margin: 0;
         }
         
-        /* Remover as regras de background que não são necessárias */
-        #cortes-header, #sobremesas-header {
-            background-image: none; 
-            background-color: transparent;
-        }
+        /* IMAGENS DE FUNDO ORIGINAIS REVERTIDAS */
+        #cortes-header { background-image: url('carne_fundo.jpg'); background-color: #222; }
+        #sobremesas-header { background-image: url('sobremesa_fundo.png'); background-color: #222; }
         
         .menu-list { padding: 20px; max-width: 900px; margin: 0 auto; }
         
-        /* Dar um fundo mais sólido aos itens para melhorar a leitura contra o fundo dinâmico */
+        /* MELHORADO: Itens com fundo mais claro para sensação "clean" */
         .menu-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px; /* Mais padding para separar melhor os itens */
+            padding: 20px;
             margin-bottom: 10px;
             border-radius: 4px;
-            background-color: rgba(26, 26, 26, 0.8); /* Fundo semi-transparente escuro */
+            /* Fundo semi-transparente MAIS CLARO para ser mais "clean" */
+            background-color: rgba(26, 26, 26, 0.95); 
             border: 1px solid #222;
             
-            /* SCROLL REVEAL (MANTIDO) */
-            opacity: 0; 
-            transform: translateY(20px);
+            /* SCROLL REVEAL */
+            opacity: 0; transform: translateY(20px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out, background-color 0.3s ease;
         }
 
         .menu-item:hover { 
-            background-color: rgba(34, 34, 34, 0.95); /* Menos transparente ao hover */
+            background-color: #222;
         }
         
         .item-name { font-family: 'Playfair Display', serif; font-size: 1.4em; }
@@ -131,35 +108,24 @@
         
         .ar-container { width: 25%; text-align: right; }
         .ar-button { 
-            display: inline-block; padding: 10px 15px; 
-            background-color: #f7b731; color: #111; 
-            font-weight: bold; font-size: 0.8em; 
-            border-radius: 3px; cursor: pointer; border: none;
+            display: inline-block; padding: 10px 15px; background-color: #f7b731; color: #111; 
+            font-weight: bold; font-size: 0.8em; border-radius: 3px; cursor: pointer; border: none;
             text-transform: uppercase;
         }
 
-        /* Classes JS para visibilidade (SCROLL REVEAL) */
         .menu-item.is-visible, .category-title.is-visible, .category-header.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 1; transform: translateY(0);
         }
 
         /* ----------------------- LAYOUT DEDICADO AR ----------------------- */
-        /* ... (CSS da página AR mantido, exceto a remoção do cursor) ... */
         .ar-content { min-height: 100vh; max-width: 1200px; margin: 0 auto; position: relative; }
-        .ar-header {
-            display: flex; justify-content: flex-start; align-items: center; padding: 20px;
-            position: absolute; top: 0; left: 0; right: 0; z-index: 10;
-        }
+        .ar-header { display: flex; justify-content: flex-start; align-items: center; padding: 20px; position: absolute; top: 0; left: 0; right: 0; z-index: 10; }
         .back-button { font-size: 2em; color: #fff; cursor: pointer; margin-right: 20px; background: none; border: none; padding: 0; }
         .item-title-ar { font-family: 'Playfair Display', serif; font-size: 1.8em; color: #f7b731; margin: 0; }
         .viewer-area { background-color: #222; height: 60vh; margin: 0; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 1.5em; }
         .info-panel { padding: 20px; text-align: center; }
         .item-details-box { background-color: #1a1a1a; padding: 20px; border-radius: 5px; margin-bottom: 30px; text-align: left; }
-        .cta-ar-button {
-            display: inline-block; padding: 15px 30px; background-color: #f7b731; color: #111;
-            font-weight: bold; font-size: 1.1em; border-radius: 5px; text-transform: uppercase;
-        }
+        .cta-ar-button { display: inline-block; padding: 15px 30px; background-color: #f7b731; color: #111; font-weight: bold; font-size: 1.1em; border-radius: 5px; text-transform: uppercase; }
     </style>
     </head>
 <body>
@@ -173,8 +139,8 @@
         </header>
 
         <main class="menu">
-            <section class="menu-category" data-bg-image="carne_fundo.jpg" id="carne-section">
-                <div class="category-header is-visible">
+            <section class="menu-category" data-bg-image="carne_fundo.jpg">
+                <div class="category-header is-visible" id="cortes-header">
                     <h2 class="category-title">OS CORTES PREMIUM</h2>
                 </div>
                 
@@ -189,7 +155,6 @@
                             <button class="ar-button view-item-btn" data-target="tbone">VER PRATO</button>
                         </div>
                     </div>
-
                     <div class="menu-item" data-item-id="vazia">
                         <div class="item-details">
                             <h3 class="item-name">VAZIA - 30 Dias Maturação</h3>
@@ -200,8 +165,8 @@
                 </div>
             </section>
             
-            <section class="menu-category" data-bg-image="sobremesa_fundo.png" id="sobremesa-section">
-                <div class="category-header">
+            <section class="menu-category" data-bg-image="sobremesa_fundo.png">
+                <div class="category-header" id="sobremesas-header">
                     <h2 class="category-title">SOBREMESAS DE AUTOR</h2>
                 </div>
                 
@@ -226,7 +191,6 @@
             <button onclick="showPage('main-menu')" class="back-button">&#10094; Voltar</button> 
             <h1 class="item-title-ar">T-BONE - O Corte Duplo</h1>
         </div>
-
         <main class="ar-content">
             <div class="viewer-area" style="margin-top: 80px;">
                 <p>VISUALIZADOR 3D DO T-BONE AQUI</p>
@@ -244,7 +208,6 @@
         </main>
     </div>
     <script>
-        // Função Global para mudar entre as páginas/vistas
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -260,7 +223,7 @@
             const menuCategories = document.querySelectorAll('.menu-category');
 
             // ----------------------------------------------------
-            // 1. ANIMAÇÃO DE FUNDO FULL-SCREEN NO HOVER (NOVO)
+            // 1. ANIMAÇÃO DE FUNDO FULL-SCREEN NO HOVER
             // ----------------------------------------------------
             menuCategories.forEach(category => {
                 const bgImage = category.getAttribute('data-bg-image');
@@ -268,6 +231,7 @@
                 // Mouse ENTRA na secção
                 category.addEventListener('mouseenter', () => {
                     if (bgImage) {
+                        // Aplica a imagem de fundo à camada fixa
                         fullscreenBg.style.backgroundImage = `url('${bgImage}')`;
                         fullscreenBg.classList.add('active');
                     }
